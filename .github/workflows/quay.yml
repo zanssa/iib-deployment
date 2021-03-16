@@ -1,0 +1,55 @@
+name: Test Automatic Deployment
+
+env:
+  REGISTRY: quay.io/zalsaffa
+  REGISTRY_USER: zalsaffa
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+  IMAGE_NAME: iib-deployment
+  IMAGE_TAG: latest
+
+on:
+  pull_request:
+    types: [closed]
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
+      - '.github/**'
+    branches:
+      - master
+
+jobs:
+  deployments:
+    name: Build and Push to Quay
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Checks out a copy of the repo on the ubuntu-20.04 machine
+      # https://github.com/actions/checkout/blob/main/README.md
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Build image using Dockerfile
+      # https://github.com/redhat-actions/buildah-build/blob/main/README.md
+      - name: Build an Image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_TAG }}
+          dockerfiles: |
+            ./Dockerfile
+
+      # Push the image to the registry
+      # https://github.com/redhat-actions/push-to-registry/blob/main/README.md
+      - name: Push To Red Hat Registry, Quay
+        id: push-to-quay
+        uses: redhat-actions/push-to-registry@v2.1.1
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tag: ${{ env.IMAGE_TAG }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.REGISTRY_USER }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+
+      - name: Print out the path the image was pushed to
+        run: echo "New image has been pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
