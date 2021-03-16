@@ -16,7 +16,7 @@ on:
       - '**.yml'
       - '.github/**'
     branches:
-      - master
+      - main
 
 jobs:
   deployments:
