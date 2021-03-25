@@ -19,11 +19,18 @@ on:
       - main
 
 jobs:
+  # this job will only be triggered when a PR is merged
   deployments:
+  if: github.event.pull_request.merged == true 
     name: Build and Push to Quay
     runs-on: ubuntu-20.04
 
     steps:
+      # Print out the PR number 
+      - name: Print out the PR number 
+        run: |
+          echo PR #${{ github.event.number }}
+
       # Checks out a copy of the repo on the ubuntu-20.04 machine
       # https://github.com/actions/checkout/blob/main/README.md
       - name: Checkout code
