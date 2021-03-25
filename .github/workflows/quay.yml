@@ -28,7 +28,8 @@ jobs:
     steps:
       # Print out the PR number 
       - name: Print out the PR number 
-        run: echo ""
+        run: |
+          echo PR #${{ github.event.number }}
 
       # Checks out a copy of the repo on the ubuntu-20.04 machine
       # https://github.com/actions/checkout/blob/main/README.md
