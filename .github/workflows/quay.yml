@@ -23,7 +23,7 @@ jobs:
   deployments:
     if: github.event.pull_request.merged == true 
     name: Build and Push to Quay
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       # Print out the PR number 
@@ -35,6 +35,11 @@ jobs:
       # https://github.com/actions/checkout/blob/main/README.md
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      - run: |
+          sudo apt-get install fuse-overlayfs
+          mkdir -vp ~/.config/containers
+          printf "[storage.options]\nmount_program=\"/usr/bin/fuse-overlayfs\"" > ~/.config/containers/storage.conf
 
       # Build image using Dockerfile
       # https://github.com/redhat-actions/buildah-build/blob/main/README.md
