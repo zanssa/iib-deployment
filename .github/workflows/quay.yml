@@ -23,7 +23,7 @@ jobs:
   deployments:
     if: github.event.pull_request.merged == true 
     name: Build and Push to Quay
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
 
     steps:
       # Print out the PR number 
