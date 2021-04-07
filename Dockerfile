@@ -11,6 +11,6 @@ RUN dnf install -y \
 
 ADD tower.sh /tmp/tower.sh
 
-RUN chmod +x /tower.sh
+RUN chmod +x /tmp/tower.sh
 
 ENTRYPOINT [ "/tmp/tower.sh" ]
