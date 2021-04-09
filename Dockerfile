@@ -9,9 +9,9 @@ RUN dnf install -y \
     && dnf -y clean all \
     && rm -rf /tmp/*
 
-#ADD tower.sh /tmp/tower.sh
+ADD tower.sh /tmp/tower.sh
 
-#RUN chmod +x /tmp/tower.sh
+RUN chmod +x /tmp/tower.sh
 
 #ENTRYPOINT [ "/tmp/tower.sh" ]
 CMD ["/bin/bash"]
