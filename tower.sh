@@ -5,8 +5,10 @@ if [ $# -lt 4 ]
 then
     echo "One or more of the required arguments is not passed"
 else
-    awx --conf.host "$tower_host" \
-        --conf.token "$tower_oauth" \
-        --conf.username "$tower_user" \
-        -k job_templates launch "$tower_job" --monitor -f human
+    echo "host" $1
+    echo "'$4'"
+    awx --conf.host $1 \
+        --conf.token $2 \
+        --conf.username $3 \
+        -k job_templates launch "$4" --monitor -f human
 fi
