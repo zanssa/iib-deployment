@@ -10,5 +10,5 @@ else
     awx --conf.host $1 \
         --conf.token $2 \
         --conf.username $3 \
-        -k job_templates launch "$4" --monitor -f human
+        -k workflow_job_templates launch "$4" -f human
 fi
