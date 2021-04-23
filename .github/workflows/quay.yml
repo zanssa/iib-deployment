@@ -21,7 +21,7 @@ on:
 jobs:
   # this job will only be triggered when a PR is merged
   deployments:
-    if: ${{ github.event.pull_request.merged == true && github.event.label.name == 'deploy_test' }}
+    if: github.event.pull_request.merged == true && github.event.label.name == 'deploy_test'
     name: Build and Push to Quay
     runs-on: ubuntu-20.04
 
