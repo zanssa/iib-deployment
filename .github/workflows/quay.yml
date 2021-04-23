@@ -10,7 +10,7 @@ env:
 
 on:
   pull_request:
-    types: [closed]
+    types: [closed, labeled]
     paths-ignore:
       - '**.md'
       - '**.yml'
