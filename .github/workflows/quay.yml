@@ -10,7 +10,7 @@ env:
 
 on:
   pull_request:
-    types: [closed, labeled]
+    types: [closed]
     paths-ignore:
       - '**.md'
       - '**.yml'
@@ -21,7 +21,7 @@ on:
 jobs:
   # this job will only be triggered when a PR is merged
   deployments:
-    if: github.event.pull_request.merged == true && github.event.pull_request.labels.names == 'deploy_test'
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'deploy_test')
     name: Build and Push to Quay
     runs-on: ubuntu-20.04
 
